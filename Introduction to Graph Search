@@ -1,0 +1,218 @@
+# Graph Search
+
+## What is Graph Search?
+
+The goal of **graph search** is:
+
+> Given a starting vertex `s`, find every vertex that can be reached from `s`.
+
+The algorithm keeps track of which vertices have already been explored so that it does not repeatedly explore the same vertices and edges.
+
+Graph search maintains two important ideas:
+
+* **Explored set** — vertices that have already been discovered.
+* **Frontier** — edges connecting explored vertices to unexplored vertices.
+
+This general approach works for both **undirected and directed graphs**.
+
+For directed graphs, an edge can only be followed in its directed direction.
+
+### Two Major Graph Search Algorithms
+
+| Algorithm | Main Data Structure | Main Idea                                         |
+| --------- | ------------------- | ------------------------------------------------- |
+| **BFS**   | Queue               | Explore layer by layer                            |
+| **DFS**   | Stack / Recursion   | Explore as deeply as possible before backtracking |
+
+Both BFS and DFS run in:
+
+**O(V + E)**
+
+where:
+
+* `V` = number of vertices
+* `E` = number of edges
+
+---
+
+# Breadth-First Search (BFS)
+
+**Breadth-First Search** explores a graph **layer by layer**.
+
+It uses a **queue**:
+
+**FIFO — First In, First Out**
+
+The first vertex added to the queue is the first vertex processed.
+
+## Basic Process
+
+1. Add the starting vertex `s` to the queue.
+2. Mark `s` as explored.
+3. While the queue is not empty:
+
+   * Remove the first vertex `v`.
+   * Look at every neighbour `w` of `v`.
+   * If `w` is unexplored:
+
+     * Mark `w` as explored.
+     * Add `w` to the queue.
+
+In other words:
+
+**BFS → explore all nearby vertices first, then move further away.**
+
+### Example of the layers
+
+Starting from `s`:
+
+```text
+Layer 0:       s
+
+Layer 1:     a   b   c
+
+Layer 2:    d e   f   g
+
+Layer 3:      h   i
+```
+
+BFS completely explores one layer before moving on to the next.
+
+---
+
+## Properties of BFS
+
+### 1. Reachability
+
+A vertex `v` is explored **if and only if** there exists a path from `s` to `v`.
+
+So, BFS finds every vertex that is reachable from the starting vertex.
+
+### 2. Running Time
+
+BFS examines each reachable vertex and edge only a constant number of times.
+
+Therefore:
+
+**Running time = O(V + E)**
+
+This is linear in the size of the graph.
+
+---
+
+# BFS and Shortest Paths
+
+One of the most important applications of BFS is finding **shortest paths in unweighted graphs**.
+
+For an unweighted graph, define:
+
+`dist(s, v)`
+
+as the **minimum number of edges** on any path from `s` to `v`.
+
+BFS can compute this distance.
+
+## Distance Initialization
+
+Initially:
+
+```text
+dist(s) = 0
+
+dist(v) = ∞
+```
+
+for every other vertex `v`.
+
+When BFS discovers a new vertex `w` from vertex `v`:
+
+```text
+dist(w) = dist(v) + 1
+```
+
+This works because every edge has the same cost: `1`.
+
+### Why Does BFS Find the Shortest Path?
+
+BFS explores vertices in layers based on their distance from the starting vertex.
+
+* Layer 0 → distance 0
+* Layer 1 → distance 1
+* Layer 2 → distance 2
+* Layer 3 → distance 3
+* etc.
+
+A vertex cannot be discovered at a later layer if there were already a shorter path to it, because BFS would have discovered it in an earlier layer.
+
+Therefore:
+
+> **BFS finds shortest paths in unweighted graphs.**
+
+**Important:** DFS does **not** guarantee shortest paths.
+
+---
+
+# Depth-First Search (DFS)
+
+**Depth-First Search** explores a graph by going **as deeply as possible** before backtracking.
+
+Instead of exploring an entire layer first, DFS follows one path until it cannot continue, then goes back and tries another path.
+
+DFS can be implemented in two main ways:
+
+### Option 1 — Stack
+
+A stack follows:
+
+**LIFO — Last In, First Out**
+
+The most recently added vertex is processed first.
+
+### Option 2 — Recursion
+
+Recursion naturally provides the stack needed for DFS.
+
+A basic recursive DFS looks like:
+
+```text
+DFS(v):
+
+    mark v as explored
+
+    for each neighbour w of v:
+
+        if w is unexplored:
+
+            DFS(w)
+```
+
+The process is:
+
+1. Start at a vertex.
+2. Mark it as explored.
+3. Choose an unexplored neighbour.
+4. Continue exploring from that neighbour.
+5. When there are no more unexplored neighbours, backtrack.
+6. Continue until all reachable vertices have been explored.
+
+### Running Time
+
+DFS visits each reachable vertex and examines each reachable edge only a constant number of times.
+
+Therefore:
+
+**Running time = O(V + E)**
+
+---
+
+# BFS vs DFS
+
+|                                    | BFS            | DFS                 |
+| ---------------------------------- | -------------- | ------------------- |
+| Main structure                     | Queue          | Stack / Recursion   |
+| Order                              | Layer by layer | As deep as possible |
+| Principle                          | FIFO           | LIFO                |
+| Shortest path in unweighted graph? | **Yes**        | **No guarantee**    |
+| Running time                       | O(V + E)       | O(V + E)            |
+
+
