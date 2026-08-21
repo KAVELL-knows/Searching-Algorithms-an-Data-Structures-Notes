@@ -1,0 +1,16 @@
+# Searching Algorithms
+
+A **searching algorithm** is a step-by-step method used to locate a specific value or determine whether it exists within a data structure such as an array, list, tree, or graph.
+
+Some important searching algorithms and techniques are:
+
+* Linear Search
+* Binary Search
+* Graph Search
+
+  * Breadth-First Search (BFS)
+  * Depth-First Search (DFS)
+* Dijkstra's Shortest-Path Algorithm
+* Hashing
+* Binary Search Trees
+* Advanced Search Techniques
